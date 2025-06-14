@@ -3,6 +3,8 @@
 Effortless context file generator for AI, LLMs, prompt engineering, code agents & embeddings.  
 Recursively grabs your codebase, filters noise, and spits out clean, LLM-friendly context files. 🚀
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## 🚀 Features
 
 - Recursively scans files & nested folders
@@ -69,7 +71,7 @@ END FILE CONTENT
 | `-F, --ignore-folders [folders...]`       | Folders to ignore (space/comma separated)                      | `.git` `.vscode` `node_modules` `dist`                                    |
 | `-f, --ignore-files [files...]`           | Files to ignore (space/comma separated)                        | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
 | `-e, --ignore-extensions [extensions...]` | Extensions to ignore (space/comma separated, no dot)           | `bat` `log` `tmp`                                                         |
-| `-P, --priority-files [files...]`       | Files to always place on top (space/comma separated, any path) | `README.md` always default                                                |
+| `-P, --priority-files [files...]`         | Files to always place on top (space/comma separated, any path) | `README.md` always default                                                |
 | `-d, --dry-run`                           | Show files that would be included without writing              | `false`                                                                   |
 
 ✅ Both comma `,` and space-separated values are supported.

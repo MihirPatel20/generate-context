@@ -1,10 +1,31 @@
 {
   "name": "generate-context",
   "version": "1.0.0",
+  "description": "CLI tool to generate LLM-friendly code context files for AI, agents, embeddings, and prompt engineering.",
   "bin": {
     "generate-context": "./bin/index.js"
   },
   "type": "module",
+  "author": "Mihir Patel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MihirPatel20/generate-context.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MihirPatel20/generate-context/issues"
+  },
+  "homepage": "https://github.com/MihirPatel20/generate-context#readme",
+  "keywords": [
+    "context",
+    "generate-context",
+    "llm",
+    "prompt-engineering",
+    "ai",
+    "code",
+    "cli",
+    "agent"
+  ],
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
