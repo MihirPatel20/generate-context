@@ -7,13 +7,15 @@ Recursively grabs your codebase, filters noise, and spits out clean, LLM-friendl
 
 - Recursively scans files & nested folders
 - Fully configurable file filtering
+- Priority files ordering (put your important files on top!)
+- Auto prioritizes `README.md` by default
+- Works for files at any depth
 - Exclude unwanted folders, extensions, or specific files
 - Supports both CLI args & config file
 - Friendly CLI: supports comma-separated OR space-separated inputs
-- Short option flags for quick typing
 - Dry-run mode to preview files
-- Clean, LLM-friendly file output format
-- Beautiful colored output with spinners 🎨
+- Clean, LLM-friendly output format
+- Beautiful colored CLI output 🎨
 - Fast & lightweight pure Node.js CLI
 
 ## 📦 Installation
@@ -60,16 +62,17 @@ END FILE CONTENT
 
 ## 🔧 CLI Options
 
-| Option                                    | Description                                          | Default                                                                   |
-| ----------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
-| `-p, --path <path>`                       | Path to scan                                         | `.`                                                                       |
-| `-o, --output <filename>`                 | Output filename                                      | `prompt-context.txt`                                                      |
-| `-F, --ignore-folders [folders...]`       | Folders to ignore (space/comma separated)            | `.git` `.vscode` `node_modules` `dist`                                    |
-| `-f, --ignore-files [files...]`           | Files to ignore (space/comma separated)              | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
-| `-e, --ignore-extensions [extensions...]` | Extensions to ignore (space/comma separated, no dot) | `bat` `log` `tmp`                                                         |
-| `-d, --dry-run`                           | Show files that would be included without writing    | `false`                                                                   |
+| Option                                    | Description                                                    | Default                                                                   |
+| ----------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `-p, --path <path>`                       | Path to scan                                                   | `.`                                                                       |
+| `-o, --output <filename>`                 | Output filename                                                | `prompt-context.txt`                                                      |
+| `-F, --ignore-folders [folders...]`       | Folders to ignore (space/comma separated)                      | `.git` `.vscode` `node_modules` `dist`                                    |
+| `-f, --ignore-files [files...]`           | Files to ignore (space/comma separated)                        | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
+| `-e, --ignore-extensions [extensions...]` | Extensions to ignore (space/comma separated, no dot)           | `bat` `log` `tmp`                                                         |
+| `-P, --priority-files [files...]`       | Files to always place on top (space/comma separated, any path) | `README.md` always default                                                |
+| `-d, --dry-run`                           | Show files that would be included without writing              | `false`                                                                   |
 
-✅ Both comma `,` and space-separated values are supported for convenience.
+✅ Both comma `,` and space-separated values are supported.
 
 ## 🔧 Config File Support (`.generatecontextrc.json`)
 
@@ -86,6 +89,7 @@ You can also configure via file in project root:
 ```
 
 - CLI flags always override config values.
+- Priority files take absolute priority regardless of directory depth.
 
 ## 🔥 Examples
 
@@ -95,13 +99,19 @@ You can also configure via file in project root:
 generate-context
 ```
 
+### Custom priority files
+
+```bash
+generate-context -P index.js bin/cli.js src/app.js
+```
+
 ### Scan specific folder
 
 ```bash
 generate-context -p ./src
 ```
 
-### Change output file name
+### Change output filename
 
 ```bash
 generate-context -o context.txt
@@ -134,7 +144,7 @@ generate-context --ignore-files .env,.DS_Store,package-lock.json
 ### Combine everything
 
 ```bash
-generate-context -p ./backend -o my-context.txt -F dist .cache -e log tmp -f .env package-lock.json -d
+generate-context -p ./backend -o my-context.txt -F dist .cache -e log tmp -f .env package-lock.json -P index.js schema/prisma/schema.prisma -d
 ```
 
 ### Dry-run mode
@@ -173,4 +183,3 @@ Got ideas? Found bugs?
 Issues, PRs, and feedback always welcome!
 
 Made with ❤️ by Mihir Patel
-

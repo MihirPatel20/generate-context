@@ -27,6 +27,10 @@ program
   .option(
     "-d, --dry-run",
     "show files that would be included without writing output"
+  )
+  .option(
+    "-P, --priority-files [extensions...]",
+    "extensions to prioritize first (space separated, no dot)"
   );
 
 program.parse(process.argv);
