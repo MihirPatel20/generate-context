@@ -61,9 +61,9 @@ END FILE CONTENT
 | ---------------------------------- | -------------------------------------------------- | --------------------------- |
 | `-p, --path <path>`                | Path to scan                                       | Current directory (`.`)     |
 | `-o, --output <filename>`          | Output filename                                    | `prompt-context.txt`        |
-| `--ignore-folders <folders>`       | Comma-separated folders to ignore                  | `.git,.vscode,node_modules` |
-| `--ignore-extensions <extensions>` | Comma-separated file extensions to ignore (no dot) | `bat,log,tmp`               |
-| `--exclude-files <files>`          | Comma-separated specific filenames to exclude      | `package-lock.json,.env`    |
+| `--ignore-folders <folders>`       | Comma-separated folders to ignore                  | `.git` `.vscode` `node_modules` `dist` |
+| `--ignore-extensions <extensions>` | Comma-separated file extensions to ignore (no dot) | `bat` `log` `tmp`               |
+| `--exclude-files <files>`          | Comma-separated specific filenames to exclude      | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt`    |
 | `--dry-run`                        | Show files that would be included without writing  | `false`                     |
 
 ## 🔧 Config File Support (`.generatecontextrc.json`)
