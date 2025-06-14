@@ -1,6 +1,6 @@
 # 📝 generate-context
 
-Effortless context file generator for AI, LLMs, prompt engineering, code agents & embeddings.
+Effortless context file generator for AI, LLMs, prompt engineering, code agents & embeddings.  
 Recursively grabs your codebase, filters noise, and spits out clean, LLM-friendly context files. 🚀
 
 ## 🚀 Features
@@ -8,8 +8,10 @@ Recursively grabs your codebase, filters noise, and spits out clean, LLM-friendl
 - Recursively scans files & nested folders
 - Fully configurable file filtering
 - Exclude unwanted folders, extensions, or specific files
+- Supports both CLI args & config file
+- Friendly CLI: supports comma-separated OR space-separated inputs
+- Short option flags for quick typing
 - Dry-run mode to preview files
-- Config file support (`.generatecontextrc.json`)
 - Clean, LLM-friendly file output format
 - Beautiful colored output with spinners 🎨
 - Fast & lightweight pure Node.js CLI
@@ -24,29 +26,25 @@ cd generate-context
 npm install
 ```
 
-Optional: link globally to use `generate-context` command anywhere:
+Optional: link globally:
 
 ```bash
 npm link
 ```
 
-Or simply:
+Or:
 
 ```bash
 npm install -g .
 ```
 
-✅ You're good to go.
-
 ## ⚡ Quick Usage
-
-Simply run inside any project folder:
 
 ```bash
 generate-context
 ```
 
-This will scan the current directory and create `prompt-context.txt` like:
+Scans current directory and creates `prompt-context.txt` like:
 
 ```txt
 FILE: /src/file1.js
@@ -54,98 +52,95 @@ BEGIN FILE CONTENT
 <file content here>
 END FILE CONTENT
 
----
 FILE: /public/index.html
 BEGIN FILE CONTENT
 <file content here>
 END FILE CONTENT
-
 ```
 
 ## 🔧 CLI Options
 
-| Option                             | Description                                        | Default                                                                   |
-| ---------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
-| `-p, --path <path>`                | Path to scan                                       | Current directory (`.`)                                                   |
-| `-o, --output <filename>`          | Output filename                                    | `prompt-context.txt`                                                      |
-| `--ignore-folders <folders>`       | Comma-separated folders to ignore                  | `.git` `.vscode` `node_modules` `dist`                                    |
-| `--ignore-extensions <extensions>` | Comma-separated file extensions to ignore (no dot) | `bat` `log` `tmp`                                                         |
-| `--ignore-files <files>`           | Comma-separated specific filenames to ignore       | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
-| `--dry-run`                        | Show files that would be included without writing  | `false`                                                                   |
+| Option                                    | Description                                          | Default                                                                   |
+| ----------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| `-p, --path <path>`                       | Path to scan                                         | `.`                                                                       |
+| `-o, --output <filename>`                 | Output filename                                      | `prompt-context.txt`                                                      |
+| `-F, --ignore-folders [folders...]`       | Folders to ignore (space/comma separated)            | `.git` `.vscode` `node_modules` `dist`                                    |
+| `-f, --ignore-files [files...]`           | Files to ignore (space/comma separated)              | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
+| `-e, --ignore-extensions [extensions...]` | Extensions to ignore (space/comma separated, no dot) | `bat` `log` `tmp`                                                         |
+| `-d, --dry-run`                           | Show files that would be included without writing    | `false`                                                                   |
+
+✅ Both comma `,` and space-separated values are supported for convenience.
 
 ## 🔧 Config File Support (`.generatecontextrc.json`)
 
-You can create a config file in your project root:
+You can also configure via file in project root:
 
 ```json
 {
   "output": "my-context.txt",
-  "ignoreFolders": ".git,.vscode,node_modules,dist,coverage",
-  "ignoreExtensions": "bat,log,tmp,env",
-  "ignoreFiles": "package-lock.json,.env",
+  "ignoreFolders": [".git", ".vscode", "node_modules", "dist", "coverage"],
+  "ignoreExtensions": ["bat", "log", "tmp", "env"],
+  "ignoreFiles": ["package-lock.json", ".env"],
   "dryRun": false
 }
 ```
 
-- If config exists, you don't need any CLI args.
 - CLI flags always override config values.
-
-Example:
-
-```bash
-generate-context
-```
-
-It will automatically apply your saved config.
 
 ## 🔥 Examples
 
-### Basic usage (default)
+### Default usage
 
 ```bash
 generate-context
 ```
 
-### Scan a specific folder
+### Scan specific folder
 
 ```bash
-generate-context --path ./src
+generate-context -p ./src
 ```
 
 ### Change output file name
 
 ```bash
-generate-context --output context.txt
+generate-context -o context.txt
 ```
 
-### Ignore extra folders
+### Ignore folders
 
 ```bash
-generate-context --ignore-folders .git,node_modules,dist,coverage
+generate-context -F dist .cache coverage
+# OR
+generate-context --ignore-folders dist,.cache,coverage
 ```
 
 ### Ignore file extensions
 
 ```bash
+generate-context -e log tmp env
+# OR
 generate-context --ignore-extensions log,tmp,env
 ```
 
 ### Ignore specific files
 
 ```bash
-generate-context --ignore-files package-lock.json,.env,.DS_Store
+generate-context -f .env .DS_Store package-lock.json
+# OR
+generate-context --ignore-files .env,.DS_Store,package-lock.json
 ```
 
-### Combine everything (fully customized)
+### Combine everything
 
 ```bash
-generate-context --path ./backend --output my-context.txt --ignore-folders .git,.cache,dist --ignore-extensions log,tmp --ignore-files package-lock.json,.env
+generate-context -p ./backend -o my-context.txt -F dist .cache -e log tmp -f .env package-lock.json -d
 ```
 
-### Dry-run mode (preview without writing file)
+### Dry-run mode
 
 ```bash
-generate-context --dry-run
+generate-context -d
 ```
 
 ## 📊 Output format (LLM optimized)
@@ -155,17 +150,15 @@ FILE: /relative/path/to/file.js
 BEGIN FILE CONTENT
 <actual file content>
 END FILE CONTENT
-
 ```
 
-👉 This format is designed for LLMs to easily parse and understand multi-file context.
-✅ Easy to parse
-✅ No YAML or JSON headaches
-✅ Perfect for LLM context injection
+- ✅ Easy to parse
+- ✅ No YAML or JSON headaches
+- ✅ Perfect for LLM context injection
 
 ## 💡 Why this tool?
 
-LLMs work way better when you feed them clean, structured context from your codebase.
+LLMs work better with clean, structured context from your codebase.
 `generate-context` helps you package your files into simple, predictable formats for:
 
 - AI agents
@@ -177,6 +170,7 @@ LLMs work way better when you feed them clean, structured context from your code
 ## 🤝 Contribute
 
 Got ideas? Found bugs?
-Issues, PRs, and feedback are always welcome
+Issues, PRs, and feedback always welcome!
 
 Made with ❤️ by Mihir Patel
+

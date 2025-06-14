@@ -12,14 +12,20 @@ const program = new Command();
 program
   .option("-p, --path <path>", "path to scan")
   .option("-o, --output <filename>", "output filename")
-  .option("--ignore-folders <folders>", "comma-separated folders to ignore")
   .option(
-    "--ignore-extensions <extensions>",
-    "comma-separated extensions to ignore"
+    "-F, --ignore-folders [folders...]",
+    "folders to ignore (space separated)"
   )
-  .option("--ignore-files <files>", "comma-separated filenames to ignore")
   .option(
-    "--dry-run",
+    "-f, --ignore-files [files...]",
+    "filenames to ignore (space separated)"
+  )
+  .option(
+    "-e, --ignore-extensions [extensions...]",
+    "extensions to ignore (space separated, no dot)"
+  )
+  .option(
+    "-d, --dry-run",
     "show files that would be included without writing output"
   );
 
