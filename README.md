@@ -1,17 +1,18 @@
 # 📝 generate-context
 
-A simple, flexible CLI tool to generate context files from any folder structure — perfect for AI, LLMs, prompt engineering, code agents, embeddings, or training data prep.
+Effortless context file generator for AI, LLMs, prompt engineering, code agents & embeddings.
+Recursively grabs your codebase, filters noise, and spits out clean, LLM-friendly context files. 🚀
 
 ## 🚀 Features
 
-- 🔥 Recursively scans files & nested folders
-- 🔥 Fully configurable file filtering
-- 🔥 Exclude unwanted folders, file extensions, or specific files
-- 🔥 Dry-run mode to preview files before generating
-- 🔥 Supports config files (`.generatecontextrc.json`)
-- 🔥 Clean LLM-friendly file structure output
-- 🔥 Beautiful colored output with spinners 🎨
-- 🔥 Fast & lightweight pure Node.js CLI
+- Recursively scans files & nested folders
+- Fully configurable file filtering
+- Exclude unwanted folders, extensions, or specific files
+- Dry-run mode to preview files
+- Config file support (`.generatecontextrc.json`)
+- Clean, LLM-friendly file output format
+- Beautiful colored output with spinners 🎨
+- Fast & lightweight pure Node.js CLI
 
 ## 📦 Installation
 
@@ -23,15 +24,21 @@ cd generate-context
 npm install
 ```
 
-Link globally to use the command anywhere:
+Optional: link globally to use `generate-context` command anywhere:
 
 ```bash
 npm link
 ```
 
-✅ Done.
+Or simply:
 
-## ⚡ Usage
+```bash
+npm install -g .
+```
+
+✅ You're good to go.
+
+## ⚡ Quick Usage
 
 Simply run inside any project folder:
 
@@ -39,7 +46,7 @@ Simply run inside any project folder:
 generate-context
 ```
 
-It will scan the current directory recursively and generate `prompt-context.txt` like this:
+This will scan the current directory and create `prompt-context.txt` like:
 
 ```txt
 FILE: /src/file1.js
@@ -57,14 +64,14 @@ END FILE CONTENT
 
 ## 🔧 CLI Options
 
-| Option                             | Description                                        | Default                     |
-| ---------------------------------- | -------------------------------------------------- | --------------------------- |
-| `-p, --path <path>`                | Path to scan                                       | Current directory (`.`)     |
-| `-o, --output <filename>`          | Output filename                                    | `prompt-context.txt`        |
-| `--ignore-folders <folders>`       | Comma-separated folders to ignore                  | `.git` `.vscode` `node_modules` `dist` |
-| `--ignore-extensions <extensions>` | Comma-separated file extensions to ignore (no dot) | `bat` `log` `tmp`               |
-| `--exclude-files <files>`          | Comma-separated specific filenames to exclude      | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt`    |
-| `--dry-run`                        | Show files that would be included without writing  | `false`                     |
+| Option                             | Description                                        | Default                                                                   |
+| ---------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
+| `-p, --path <path>`                | Path to scan                                       | Current directory (`.`)                                                   |
+| `-o, --output <filename>`          | Output filename                                    | `prompt-context.txt`                                                      |
+| `--ignore-folders <folders>`       | Comma-separated folders to ignore                  | `.git` `.vscode` `node_modules` `dist`                                    |
+| `--ignore-extensions <extensions>` | Comma-separated file extensions to ignore (no dot) | `bat` `log` `tmp`                                                         |
+| `--ignore-files <files>`           | Comma-separated specific filenames to ignore       | `.env` `package-lock.json` `.generatecontextrc.json` `prompt-context.txt` |
+| `--dry-run`                        | Show files that would be included without writing  | `false`                                                                   |
 
 ## 🔧 Config File Support (`.generatecontextrc.json`)
 
@@ -75,15 +82,13 @@ You can create a config file in your project root:
   "output": "my-context.txt",
   "ignoreFolders": ".git,.vscode,node_modules,dist,coverage",
   "ignoreExtensions": "bat,log,tmp,env",
-  "excludeFiles": "package-lock.json,.env",
+  "ignoreFiles": "package-lock.json,.env",
   "dryRun": false
 }
 ```
 
-When config file exists:
-
-- You don't need to pass any CLI args.
-- CLI args will always override config values if provided.
+- If config exists, you don't need any CLI args.
+- CLI flags always override config values.
 
 Example:
 
@@ -125,16 +130,16 @@ generate-context --ignore-folders .git,node_modules,dist,coverage
 generate-context --ignore-extensions log,tmp,env
 ```
 
-### Exclude specific files
+### Ignore specific files
 
 ```bash
-generate-context --exclude-files package-lock.json,.env,.DS_Store
+generate-context --ignore-files package-lock.json,.env,.DS_Store
 ```
 
 ### Combine everything (fully customized)
 
 ```bash
-generate-context --path ./backend --output my-context.txt --ignore-folders .git,.cache,dist --ignore-extensions log,tmp --exclude-files package-lock.json,.env
+generate-context --path ./backend --output my-context.txt --ignore-folders .git,.cache,dist --ignore-extensions log,tmp --ignore-files package-lock.json,.env
 ```
 
 ### Dry-run mode (preview without writing file)
@@ -151,18 +156,27 @@ BEGIN FILE CONTENT
 <actual file content>
 END FILE CONTENT
 
----
 ```
 
 👉 This format is designed for LLMs to easily parse and understand multi-file context.
+✅ Easy to parse
+✅ No YAML or JSON headaches
+✅ Perfect for LLM context injection
 
 ## 💡 Why this tool?
 
-LLMs work best when you provide context from your actual code/files in a structured way.
-This tool simplifies packaging your project files as clean input for AI agents, embeddings, or few-shot prompt chains.
+LLMs work way better when you feed them clean, structured context from your codebase.
+`generate-context` helps you package your files into simple, predictable formats for:
 
-## 🤝 Contributions Welcome!
+- AI agents
+- Embeddings
+- Prompt chains
+- Fine-tuning data prep
+- Code summarization pipelines
 
-Feel free to open issues or PRs if you wanna improve or extend the tool.
+## 🤝 Contribute
+
+Got ideas? Found bugs?
+Issues, PRs, and feedback are always welcome
 
 Made with ❤️ by Mihir Patel

@@ -17,7 +17,7 @@ program
     "--ignore-extensions <extensions>",
     "comma-separated extensions to ignore"
   )
-  .option("--exclude-files <files>", "comma-separated filenames to exclude")
+  .option("--ignore-files <files>", "comma-separated filenames to ignore")
   .option(
     "--dry-run",
     "show files that would be included without writing output"
